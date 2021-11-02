@@ -1,12 +1,19 @@
-require_relative 'board.rb'
+
 
 class Piece
     attr_reader :position, :board, :color
 
-    def initialize(position, board, color)# color is how we're going to track sides
+    def initialize(position, board, color = 'white')# color is how we're going to track sides
         @position = position
         @board = board
         @color = color
+    end
+
+    def symbol
+    end
+
+    def to_s
+        symbol
     end
 
     def moves
