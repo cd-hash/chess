@@ -8,6 +8,13 @@ module Stepable
     end
 
     def moves
+        possible_moves = []
+        move_diffs.each do |move|
+            dx, dy = move
+            new_move = [position[0] + dy, position[1] + dx]
+            possible_moves << new_move if @board.valid_pos?(new_move)
+        end
+        return possible_moves
     end
 
     private
