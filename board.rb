@@ -45,6 +45,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
     b = Board.new
-    k = King.new([2,0], b)
-    p k.moves
+    p = Pawn.new([2,0], b)
+    p p.moves
 end

@@ -6,7 +6,7 @@ class Piece
     def initialize(position, board, color = 'white')# color is how we're going to track sides
         @position = position
         @board = board
-        @color = color
+        @color = color # white is the bottom of the board, black is the top
     end
 
     def symbol
