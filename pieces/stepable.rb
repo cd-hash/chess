@@ -12,7 +12,11 @@ module Stepable
         move_diffs.each do |move|
             dx, dy = move
             new_move = [position[0] + dy, position[1] + dx]
-            possible_moves << new_move if @board.valid_pos?(new_move)
+            if @board.valid_pos?(new_move)
+                if @board[new_move].class == NullPiece || @board[new_move].color != self.color
+                    possible_moves << new_move
+                end
+            end
         end
         return possible_moves
     end

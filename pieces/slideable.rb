@@ -26,7 +26,9 @@ module Slideable
         valid_moves = []
         # debugger
         while @board.valid_pos?(new_move)
-            if self.board[new_move] == nil
+            if self.board[new_move].class == NullPiece
+                valid_moves << new_move.clone
+            elsif self.board[new_move].color != self.color
                 valid_moves << new_move.clone
             else
                 break

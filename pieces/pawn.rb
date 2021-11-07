@@ -33,7 +33,7 @@ class Pawn < Piece
         attacks.each do |attack|
             dy, dx = attack
             # debugger
-            if @board[[position[0] + dy, position[1] + dx]].class != NullPiece && @board.valid_pos?([position[0] + dy, position[1] + dx])
+            if @board[[position[0] + dy, position[1] + dx]].class != NullPiece && @board.valid_pos?([position[0] + dy, position[1] + dx]) && @board[[position[0] + dy, position[1] + dx]].color != self.color
                 possible_attacks << [position[0] + dy, position[1] + dx]
             end
         end
