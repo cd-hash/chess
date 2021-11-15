@@ -29,6 +29,13 @@ class Display
 
         return :light_blue
     end
+
+    def test_me
+        for i in 0...10
+            render
+            @cursor.get_input
+        end
+    end
 end
 
 if __FILE__ == $PROGRAM_NAME

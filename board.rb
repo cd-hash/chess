@@ -47,6 +47,27 @@ class Board
         pos.all? {|coord| coord.between?(0, 7) }
     end
 
+    def find_king(color)
+        @board.each_with_index do |row, i|
+            row.each_with_index do |tile, j|
+                return [i,j] if tile.class == King && tile.color == color
+            end
+        end
+    end
+
+    def in_check?(color)
+        opposing_color = color == :white ? :black : :white
+        king_pos = find_king(color)
+
+        pieces(opposing_color).each do |piece|
+            next if piece.class == NullPiece
+            return true if piece.moves.any? {|move| move == king_pos}
+        end
+    end
+
+    def checkmate?(color)
+    end
+
     def move_piece(turn_color, start_pos, end_pos)
         raise 'no piece is here' if self[start_pos].class == NullPiece
         piece = self[start_pos]
@@ -56,6 +77,17 @@ class Board
         raise 'you cannot move here' if !potential_moves.include?(end_pos)
         self[start_pos] = NullPiece.instance
         self[end_pos] = piece
+    end
+
+    private
+    def pieces(color = nil)
+        all_pieces = []
+        @board.each_index do |i|
+            row.each_index do |j|
+                all_pieces << self[[i, j]] if self[[i, j]].color == color
+            end
+        end
+        return all_pieces
     end
 end
 
