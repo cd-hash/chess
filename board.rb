@@ -12,7 +12,7 @@ class Board
         major_pieces_rows = [0, 7]
         pawn_row = [1, 6]
         @board.each_with_index do |row, row_index|
-            color = row_index > 1 ? 'white' : 'black'
+            color = row_index > 1 ? :white : :black
             if major_pieces_rows.include?(row_index) # place rook, knight, bishop, queen, king
                 row.each_index do |tile_index|
                     if tile_index == 0 || tile_index == 7
