@@ -1,4 +1,5 @@
 require_relative 'all_pieces'
+require 'byebug'
 
 class Board
     attr_reader :board
@@ -16,19 +17,19 @@ class Board
             if major_pieces_rows.include?(row_index) # place rook, knight, bishop, queen, king
                 row.each_index do |tile_index|
                     if tile_index == 0 || tile_index == 7
-                        row[tile_index] = Rook.new([row_index, tile_index], self.board, color)
+                        row[tile_index] = Rook.new([row_index, tile_index], self, color)
                     elsif tile_index == 1 || tile_index == 6
-                        row[tile_index] = Knight.new([row_index, tile_index], self.board, color)
+                        row[tile_index] = Knight.new([row_index, tile_index], self, color)
                     elsif tile_index == 2 || tile_index == 5
-                        row[tile_index] = Bishop.new([row_index, tile_index], self.board, color)
+                        row[tile_index] = Bishop.new([row_index, tile_index], self, color)
                     elsif tile_index == 3
-                        row[tile_index] = Queen.new([row_index, tile_index], self.board, color)
+                        row[tile_index] = Queen.new([row_index, tile_index], self, color)
                     else
-                        row[tile_index] = King.new([row_index, tile_index], self.board, color)
+                        row[tile_index] = King.new([row_index, tile_index], self, color)
                     end
                 end
             elsif pawn_row.include?(row_index)
-                row.each_index { |tile_index| row[tile_index] = Pawn.new([row_index, tile_index], self.board, color)}
+                row.each_index { |tile_index| row[tile_index] = Pawn.new([row_index, tile_index], self, color)}
             end
         end
     end
@@ -60,9 +61,11 @@ class Board
         king_pos = find_king(color)
 
         pieces(opposing_color).each do |piece|
-            next if piece.class == NullPiece
+            # next if piece.class == NullPiece
+            # debugger
             return true if piece.moves.any? {|move| move == king_pos}
         end
+        return false
     end
 
     def checkmate?(color)
@@ -80,11 +83,11 @@ class Board
     end
 
     private
-    def pieces(color = nil)
+    def pieces(color)
         all_pieces = []
-        @board.each_index do |i|
+        @board.each_with_index do |row, i|
             row.each_index do |j|
-                all_pieces << self[[i, j]] if self[[i, j]].color == color
+                all_pieces << self[[i, j]] if self[[i, j]].color == color && self[[i, j]].class != NullPiece
             end
         end
         return all_pieces
@@ -92,4 +95,6 @@ class Board
 end
 
 if __FILE__ == $PROGRAM_NAME
+    board = Board.new
+    puts board.in_check?(:white)
 end
