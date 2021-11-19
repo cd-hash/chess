@@ -88,7 +88,23 @@ class Board
         self[end_pos] = piece
     end
 
+    def dup
+        duped_board = Board.new
+
+    end
+
     private
+    def add_piece(pos, color, piece_type)
+        case piece_type
+        when :Rook
+        when :Bishop
+        when :Knight
+        when :Queen
+        when :king
+        when :Pawn
+        when :NullPiece
+    end
+
     def pieces(color)
         all_pieces = []
         @board.each_with_index do |row, i|
@@ -102,5 +118,5 @@ end
 
 if __FILE__ == $PROGRAM_NAME
     board = Board.new
-    puts board.in_check?(:white)
+    puts board[[0,0]].color
 end

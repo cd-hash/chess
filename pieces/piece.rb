@@ -16,7 +16,11 @@ class Piece
         symbol
     end
 
-    def moves
+    def valid_moves
         #this returns all viable moves for a piece
+    end
+
+    def move_into_check?(end_pos)
+        
     end
 end
