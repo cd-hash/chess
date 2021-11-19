@@ -69,6 +69,12 @@ class Board
     end
 
     def checkmate?(color)
+        if in_check?(color)
+            pieces(color).none? do |piece|
+                # is there any move that can make #in_check? false again
+                piece.valid_moves.any?
+            end
+        end
     end
 
     def move_piece(turn_color, start_pos, end_pos)
