@@ -90,21 +90,37 @@ class Board
 
     def dup
         duped_board = Board.new
-
+        (0..7).each do |i|
+            (0..7).each do |j|
+                duped_board[[i, j]] = NullPiece.instance if self[[i, j]].instance_of?(NullPiece)
+                piece = self[[i, j]]
+                duped_board[[i, j]] = duped_board.add_piece(piece.position, piece.color, piece.class.to_s.to_sym)
+            end
+        end
+        return duped_board
     end
 
-    private
+    
     def add_piece(pos, color, piece_type)
         case piece_type
         when :Rook
+            Rook.new(pos, self, color)
         when :Bishop
+            Bishop.new(pos, self, color)
         when :Knight
+            Knight.new(pos, self, color)
         when :Queen
+            Queen.new(pos, self, color)
         when :king
+            King.new(pos, self, color)
         when :Pawn
+            Pawn.new(pos, self, color)
         when :NullPiece
+            NullPiece.instance
+        end
     end
 
+    private
     def pieces(color)
         all_pieces = []
         @board.each_with_index do |row, i|
@@ -118,5 +134,7 @@ end
 
 if __FILE__ == $PROGRAM_NAME
     board = Board.new
-    puts board[[0,0]].color
+    puts board[[0,0]].class
+    board2 = board.dup
+    puts board2[[0,0]].class
 end
