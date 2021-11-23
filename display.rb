@@ -25,9 +25,9 @@ class Display
 
     def set_backgroud(pos)
         row, col = pos
-        return :light_black if row % 2 == col % 2
+        return :light_blue if row % 2 == col % 2
 
-        return :light_blue
+        return :light_black
     end
 
     def test_me

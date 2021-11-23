@@ -9,7 +9,9 @@ class Pawn < Piece
 
     def moves
         possible_moves = []
-        possible_moves << [position[0] + (forward_steps * forward_dir), 0] if @board.valid_pos?([position[0] + (forward_steps * forward_dir), 0])
+        forward_steps.each do |move|
+            possible_moves << [position[0] + (move * forward_dir), position[1]]
+        end
         possible_moves += side_attacks
         return possible_moves
     end
@@ -20,11 +22,12 @@ class Pawn < Piece
 
     def forward_dir
         #returns 1 or -1
-        return color == "white" ? -1 : 1
+        return color == :white ? -1 : 1
     end
 
     def forward_steps
-         return at_start_row? == true ? 2 : 1
+        return [1, 2] if at_start_row?
+        return [1]
     end
 
     def side_attacks

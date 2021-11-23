@@ -75,6 +75,7 @@ class Board
                 piece.valid_moves.any?
             end
         end
+        return false
     end
 
     def move_piece(turn_color, start_pos, end_pos)
@@ -84,8 +85,15 @@ class Board
         raise 'you must move your own pieces' if turn_color != piece.color
         potential_moves = piece.moves
         raise 'you cannot move here' if !potential_moves.include?(end_pos)
-        self[start_pos] = NullPiece.instance
+        raise 'you cannot move into or leave yourself in check!' if !piece.valid_moves.include?(end_pos)
+        move_piece!(start_pos, end_pos)
+    end
+
+    def move_piece!(start_pos, end_pos)
+        piece = self[start_pos]
         self[end_pos] = piece
+        self[end_pos].update_postion(end_pos)
+        self[start_pos] = NullPiece.instance
     end
 
     def dup
@@ -111,7 +119,7 @@ class Board
             Knight.new(pos, self, color)
         when :Queen
             Queen.new(pos, self, color)
-        when :king
+        when :King
             King.new(pos, self, color)
         when :Pawn
             Pawn.new(pos, self, color)
@@ -134,7 +142,5 @@ end
 
 if __FILE__ == $PROGRAM_NAME
     board = Board.new
-    puts board[[0,0]].class
-    board2 = board.dup
-    puts board2[[0,0]].class
+    
 end
