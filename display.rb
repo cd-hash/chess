@@ -11,6 +11,7 @@ class Display
     end
 
     def render
+        system("clear") #clear the console anytime render is called
         @board.board.each_with_index do |row, i|
             row.each_with_index do |tile, j|
                 backgroud_color = (:yellow if [i, j] == @cursor.cursor_pos) || set_backgroud([i, j])
@@ -29,23 +30,5 @@ class Display
 
         return :light_black
     end
-
-    def test_me
-        for i in 0...10
-            render
-            @cursor.get_input
-        end
-    end
 end
 
-if __FILE__ == $PROGRAM_NAME
-    b = Board.new
-    b.move_piece(:white, [6, 5], [4, 5])
-    b.move_piece(:black, [1, 4], [3, 4])
-    b.move_piece(:white, [4, 5], [3, 4])
-    # b.move_piece(:black, [0, 3], [4, 7])
-    puts "Is :white in check? #{b.in_check?(:white)}" 
-    puts "Does :black have checkmate? #{b.checkmate?(:white)}"
-    game = Display.new(b)
-    game.render
-end

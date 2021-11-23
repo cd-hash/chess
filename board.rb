@@ -139,8 +139,3 @@ class Board
         return all_pieces
     end
 end
-
-if __FILE__ == $PROGRAM_NAME
-    board = Board.new
-    
-end

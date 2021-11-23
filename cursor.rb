@@ -80,7 +80,7 @@ class Cursor
     case key
     when :return, :space
       @selected = !@selected
-      return @cursor_pos
+      return @cursor_pos.clone
     when :left, :right, :up, :down
         update_pos(MOVES[key])
         return nil

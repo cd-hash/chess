@@ -1,0 +1,5 @@
+
+
+
+class HumanPlayer < Player
+end
