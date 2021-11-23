@@ -11,8 +11,7 @@ class Game
     end
 
     def play
-        moves = 15
-        while moves > 0
+        until @board.checkmate?(@current_player)
             begin
             start_pos, end_pos = @players[@current_player].make_move
             @board.move_piece(@current_player, start_pos, end_pos)
@@ -21,15 +20,18 @@ class Game
                 sleep 2
                 retry
             end
-            puts @board.in_check?(@current_player)
-            puts @board.checkmate?(@current_player)
             swap_players
-            moves -= 1
         end
+        @display.render
+        puts "Congratulations #{opposite_player}!! \nYou Won!!"
     end
 
     private
     def notify_players
+    end
+
+    def opposite_player
+        winner = @current_player == :white ? :black : :white
     end
 
     def swap_players
