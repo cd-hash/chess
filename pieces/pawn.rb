@@ -10,7 +10,10 @@ class Pawn < Piece
     def moves
         possible_moves = []
         forward_steps.each do |move|
-            possible_moves << [position[0] + (move * forward_dir), position[1]]
+            if @board[[position[0] + (move * forward_dir), position[1]]] == NullPiece.instance
+                #pawns can't attack directly in front of them
+                possible_moves << [position[0] + (move * forward_dir), position[1]]
+            end
         end
         possible_moves += side_attacks
         return possible_moves

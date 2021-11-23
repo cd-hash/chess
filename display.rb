@@ -40,6 +40,12 @@ end
 
 if __FILE__ == $PROGRAM_NAME
     b = Board.new
+    b.move_piece(:white, [6, 5], [4, 5])
+    b.move_piece(:black, [1, 4], [3, 4])
+    b.move_piece(:white, [4, 5], [3, 4])
+    # b.move_piece(:black, [0, 3], [4, 7])
+    puts "Is :white in check? #{b.in_check?(:white)}" 
+    puts "Does :black have checkmate? #{b.checkmate?(:white)}"
     game = Display.new(b)
     game.render
 end
